@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .container {
+            display: flex;
+        }
+
+        .square {
+            width: 100px;
+            height: 100px;
+            margin: 10px;
+            cursor: move;
+        }
+
+        .target {
+            width: 120px;
+            height: 120px;
+            border: 2px solid black;
+            padding: 10px;
+            margin: 10px;
+        }
+    </style>
+    <title>Drag and Drop</title>
+</head>
+<body>
+
+<div class="container">
+    <div class="square" id="redSquare" draggable="true" ondragstart="drag(event)" style="background-color: red;"></div>
+    <div class="square" id="greenSquare" draggable="true" ondragstart="drag(event)" style="background-color: green;"></div>
+    <div class="square" id="blueSquare" draggable="true" ondragstart="drag(event)" style="background-color: blue;"></div>
+</div>
+
+<div class="container">
+    <div class="target" id="redTarget" ondrop="drop(event)" ondragover="allowDrop(event)" style="border-color: red;"></div>
+    <div class="target" id="greenTarget" ondrop="drop(event)" ondragover="allowDrop(event)" style="border-color: green;"></div>
+    <div class="target" id="blueTarget" ondrop="drop(event)" ondragover="allowDrop(event)" style="border-color: blue;"></div>
+</div>
+
+<script>
+    function allowDrop(event) {
+        event.preventDefault();
+    }
+
+    function drag(event) {
+
+        event.dataTransfer.setData("text", event.target.id);
+    }
+
+    function drop(event) {
+        event.preventDefault();
+
+
+        var data = event.dataTransfer.getData("text");
+        var draggedElement = document.getElementById(data);
+
+
+        var targetId = event.target.id;
+        var targetElement = document.getElementById(targetId);
+
+
+        if (draggedElement.style.backgroundColor === targetElement.style.borderColor) {
+            targetElement.style.backgroundColor = draggedElement.style.backgroundColor;
+        }
+    }
+</script>
+
+</body>
+</html>
